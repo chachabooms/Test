@@ -164,18 +164,46 @@ VALUES (1, 2, 6.8, 2.1, 1.9, 34, 130, 0.40),
        (2, 1, 9.9, 2.4, 1.3, 68, 165, 0.42),
        (3, 2, 3.5, 2.7, 1.8, 70, 188, 0.32);
 
--- запрос сколько каждая лаборатория сделала анализов крови
+INSERT INTO general_urine_analysis(patient_id, labratory_id, PRO, KET, BLD)
+VALUES (2, 1, 'есть', 'нет', 1),
+       (2, 1, 'нет', 'нет', 3),
+       (3, 2, 'нет', 'нет', 2),
+       (1, 2, 'нет', 'нет', 5);      
+
+INSERT INTO serology_blood(patient_id, labratory_id, HIV, syphilis, hep_B, hep_C)
+VALUES (1, 1, 'neg', 'neg', 'neg', 'neg'),
+       (1, 1, 'neg', 'neg', 'neg', 'neg'),
+       (2, 1, 'neg', 'neg', 'neg', 'neg'),
+       (3, 1, 'neg', 'neg', 'neg', 'neg'),
+       (3, 3, 'neg', 'neg', 'neg', 'neg');
+
+-- запрос сколько каждая лаборатория сделала анализов крови по возрастанию
 SELECT labratory.name as lab, COUNT(blood_analysis.labratory_id) as item
 FROM labratory
 INNER JOIN blood_analysis
 ON labratory.id = blood_analysis.labratory_id
 GROUP BY lab
-ORDER BY item DESC
+ORDER BY item;
+
+-- запрос сколько каждая лабортория сделала анализов по убыванию
+SELECT name, COUNT(item) as num FROM (
+SELECT labratory.name as name, blood_analysis.labratory_id as item
+FROM labratory
+INNER JOIN blood_analysis
+ON labratory.id = blood_analysis.labratory_id
+UNION ALL
+SELECT labratory.name as name, general_urine_analysis.labratory_id as item
+FROM labratory
+INNER JOIN general_urine_analysis
+ON labratory.id = general_urine_analysis.labratory_id
+UNION ALL
+SELECT labratory.name as name, serology_blood.labratory_id as item
+FROM labratory
+INNER JOIN serology_blood
+ON labratory.id = serology_blood.labratory_id) as t
+GROUP BY name
+ORDER BY num DESC;
 
 -- комментарии монитора
 SELECT * 
-FROM comments_monitor
-
-
-
-
+FROM comments_monitor;
