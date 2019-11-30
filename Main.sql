@@ -3,7 +3,7 @@ CREATE TABLE clinical_center (
    name VARCHAR(45) NOT NULL,
    address VARCHAR(45),
    tel INTEGER,
-   certificate ENUM('да', 'нет') NOT NULL DEFAULT 'нет',
+   certificate ENUM('yes', 'no') NOT NULL DEFAULT 'no',
    PRIMARY KEY (id)
 );
 
@@ -12,7 +12,7 @@ CREATE TABLE labratory (
   name VARCHAR(45) NOT NULL,
   address VARCHAR(45),
   tel INTEGER,
-  certificate ENUM('да', 'нет') NOT NULL DEFAULT 'нет',
+  certificate ENUM('yes', 'no') NOT NULL DEFAULT 'no',
   PRIMARY KEY (id)
 );
 
@@ -43,7 +43,7 @@ CREATE TABLE comments_monitor (
   monitor_id INTEGER NOT NULL,
   date_of_comment TIMESTAMP NOT NULL,
   comment MEDIUMTEXT NOT NULL,
-  fixed ENUM('да', 'нет') NOT NULL DEFAULT 'нет',
+  fixed ENUM('yes', 'no') NOT NULL DEFAULT 'no',
   PRIMARY KEY (id),
   FOREIGN KEY (monitor_id) REFERENCES clinical_monitor(id)
 );
@@ -52,10 +52,10 @@ CREATE TABLE patient (
    id INTEGER NOT NULL AUTO_INCREMENT,
    first_name VARCHAR(45) NOT NULL,
    last_name VARCHAR(45) NOT NULL,
-   age INTEGER NOT NULL,
+   age INTEGER NOT NULL CHECK(age >= 18),
    birthday DATE,
    race VARCHAR(45),
-   sex ENUM('м', 'ж', '?') NOT NULL DEFAULT '?',
+   sex ENUM('m', 'f', '?') NOT NULL DEFAULT '?',
    doctor_id INTEGER NOT NULL,
    PRIMARY KEY (id),
    FOREIGN KEY (doctor_id) REFERENCES doctor(id)
@@ -93,8 +93,8 @@ CREATE TABLE general_urine_analysis (
   id INTEGER NOT NULL AUTO_INCREMENT,
   patient_id INTEGER NOT NULL,
   labratory_id INTEGER NOT NULL,
-  PRO ENUM('есть', 'нет', '?') NOT NULL DEFAULT '?',
-  KET ENUM('есть', 'нет', '?') NOT NULL DEFAULT '?',
+  PRO ENUM('yes', 'no', '?') NOT NULL DEFAULT '?',
+  KET ENUM('yes', 'no', '?') NOT NULL DEFAULT '?',
   BLD INTEGER NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (patient_id) REFERENCES patient(id),
@@ -126,37 +126,37 @@ CREATE TABLE anthropometric_data (
 CREATE TABLE physical_exam (
   id INTEGER NOT NULL AUTO_INCREMENT,
   patient_id INTEGER NOT NULL,
-  cardiovascular_sys ENUM('есть', 'отклонения', '?') NOT NULL DEFAULT '?',
-  respiratory_sys ENUM('есть', 'отклонения', '?') NOT NULL DEFAULT '?',
-  digestive_sys ENUM('есть', 'отклонения', '?') NOT NULL DEFAULT '?',
-  endocrine_sys ENUM('есть', 'отклонения', '?') NOT NULL DEFAULT '?',
-  urinary_sys ENUM('есть', 'отклонения', '?') NOT NULL DEFAULT '?',
+  cardiovascular_sys ENUM('norm', 'deviation', '?') NOT NULL DEFAULT '?',
+  respiratory_sys ENUM('norm', 'deviation', '?') NOT NULL DEFAULT '?',
+  digestive_sys ENUM('norm', 'deviation', '?') NOT NULL DEFAULT '?',
+  endocrine_sys ENUM('norm', 'deviation', '?') NOT NULL DEFAULT '?',
+  urinary_sys ENUM('norm', 'deviation', '?') NOT NULL DEFAULT '?',
   comment MEDIUMTEXT,
   PRIMARY KEY (id),
   FOREIGN KEY (patient_id) REFERENCES patient(id)
 );
 
 INSERT INTO clinical_center (name, address, certificate)
-VALUES ('Клен', 'лапландия', 'да');
+VALUES ('Klen', 'Laplandiya', 'yes');
 
 INSERT INTO labratory (name, address, certificate)
-VALUES ('Волна', 'лапландия', 'да'),
-       ('Лаб при Клен', 'лапландия', 'да'),
-       ('Евролаборатория', 'евроландия' ,'нет');
+VALUES ('VolnaLab', 'Laplandiya', 'yes'),
+       ('KlenLab', 'Laplandiya', 'yes'),
+       ('EvroLab', 'Evrolandiya' ,'no');
 
 INSERT INTO doctor (clinical_center_id, first_name, last_name, education, job_experience)
-VALUES (1, 'Федор', 'Сидоров', 'ГУМО', 10);
+VALUES (1, 'Fedor', 'Sidorov', 'GUMO', 10);
 
 INSERT INTO clinical_monitor (clinical_center_id, first_name, last_name, education, job_experience)
-VALUES (1, 'Ирина', 'Петрова', 'ГУМО', 7);
+VALUES (1, 'Irina', 'Petrova', 'GUMO', 7);
 
 INSERT INTO comments_monitor (monitor_id, comment)
-VALUES (1, 'неправильно введено значение температуры');
+VALUES (1, 'incorrect a value of the temp');
 
 INSERT INTO patient (first_name, last_name, age, birthday, race, sex, doctor_id)
-VALUES ('Иван', 'Иванов', 26, '1993-02-03', 'евро', 'м', 1),
-       ('Ксения', 'Галкина', 18, '2001-01-05', 'афро', 'ж', 1),
-       ('Петр', 'Петров', 19, '2000-04-05', 'евро', 'м', 1);
+VALUES ('Ivan', 'Ivanov', 26, '1993-02-03', 'evro', 'm', 1),
+       ('Ksenya', 'Galkina', 18, '2001-01-05', 'afro', 'f', 1),
+       ('Petr', 'Petrov', 19, '2000-04-05', 'evro', 'm', 1);
 
 INSERT INTO blood_analysis (patient_id, labratory_id, glucose, HDL, LDL, general_protein, HGB, HCT)
 VALUES (1, 2, 6.8, 2.1, 1.9, 34, 130, 0.40),
@@ -165,10 +165,10 @@ VALUES (1, 2, 6.8, 2.1, 1.9, 34, 130, 0.40),
        (3, 2, 3.5, 2.7, 1.8, 70, 188, 0.32);
 
 INSERT INTO general_urine_analysis(patient_id, labratory_id, PRO, KET, BLD)
-VALUES (2, 1, 'есть', 'нет', 1),
-       (2, 1, 'нет', 'нет', 3),
-       (3, 2, 'нет', 'нет', 2),
-       (1, 2, 'нет', 'нет', 5);      
+VALUES (2, 1, 'yes', 'no', 1),
+       (2, 1, 'no', 'no', 3),
+       (3, 2, 'no', 'no', 2),
+       (1, 2, 'no', 'no', 5);      
 
 INSERT INTO serology_blood(patient_id, labratory_id, HIV, syphilis, hep_B, hep_C)
 VALUES (1, 1, 'neg', 'neg', 'neg', 'neg'),
@@ -177,33 +177,12 @@ VALUES (1, 1, 'neg', 'neg', 'neg', 'neg'),
        (3, 1, 'neg', 'neg', 'neg', 'neg'),
        (3, 3, 'neg', 'neg', 'neg', 'neg');
 
--- запрос сколько каждая лаборатория сделала анализов крови по возрастанию
-SELECT labratory.name as lab, COUNT(blood_analysis.labratory_id) as item
-FROM labratory
-INNER JOIN blood_analysis
-ON labratory.id = blood_analysis.labratory_id
-GROUP BY lab
-ORDER BY item;
-
--- запрос сколько каждая лабортория сделала анализов по убыванию
-SELECT name, COUNT(item) as num FROM (
-SELECT labratory.name as name, blood_analysis.labratory_id as item
-FROM labratory
-INNER JOIN blood_analysis
-ON labratory.id = blood_analysis.labratory_id
-UNION ALL
-SELECT labratory.name as name, general_urine_analysis.labratory_id as item
-FROM labratory
-INNER JOIN general_urine_analysis
-ON labratory.id = general_urine_analysis.labratory_id
-UNION ALL
-SELECT labratory.name as name, serology_blood.labratory_id as item
-FROM labratory
-INNER JOIN serology_blood
-ON labratory.id = serology_blood.labratory_id) as t
-GROUP BY name
-ORDER BY num DESC;
-
--- комментарии монитора
-SELECT * 
-FROM comments_monitor;
+INSERT INTO anthropometric_data(patient_id, weight, height)
+VALUES(1, 56, 1.56),
+      (2, 65, 1.76),
+      (3, 87, 1.89);
+      
+-- расчет индекса имт
+UPDATE anthropometric_data
+SET BMI = weight/(height*height)
+WHERE weight <> 0 AND height <> 0;
