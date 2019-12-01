@@ -79,3 +79,10 @@ INNER JOIN blood_analysis
 ON t.id = blood_analysis.patient_id
 WHERE HGB < 130 OR HGB > 170
 
+-- проверим наличие кетонов в мочи при диабете
+SELECT DISTINCT first_name, last_name, glucose, KET
+FROM (SELECT first_name, last_name, patient.id, KET FROM patient INNER JOIN general_urine_analysis ON patient.id = general_urine_analysis.patient_id WHERE KET = "yes") as t
+INNER JOIN blood_analysis
+ON t.id = blood_analysis.patient_id
+WHERE glucose >= 7
+

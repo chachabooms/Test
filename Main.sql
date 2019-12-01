@@ -168,7 +168,8 @@ INSERT INTO general_urine_analysis(patient_id, labratory_id, PRO, KET, BLD)
 VALUES (2, 1, 'yes', 'no', 1),
        (2, 1, 'no', 'no', 3),
        (3, 2, 'no', 'no', 2),
-       (1, 2, 'no', 'no', 5);      
+       (1, 2, 'no', 'no', 5),
+       (2, 2, 'no', 'yes', 4);      
 
 INSERT INTO serology_blood(patient_id, labratory_id, HIV, syphilis, hep_B, hep_C)
 VALUES (1, 1, 'neg', 'neg', 'neg', 'neg'),
@@ -176,6 +177,11 @@ VALUES (1, 1, 'neg', 'neg', 'neg', 'neg'),
        (2, 1, 'neg', 'neg', 'neg', 'neg'),
        (3, 1, 'neg', 'neg', 'neg', 'neg'),
        (3, 3, 'neg', 'neg', 'neg', 'neg');
+
+INSERT INTO vital_functions(patient_id, heart_rate, temp, pressure_sys, pressure_dias, respiratory_rate)
+VALUES (1, 70, 36.6, 120, 70, 16),
+       (2, 80, 36.8, 130, 60, 17),
+       (3, 90, 36.5, 120, 80, 19);
 
 INSERT INTO anthropometric_data(patient_id, weight, height)
 VALUES(1, 56, 1.56),
