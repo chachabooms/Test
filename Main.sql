@@ -159,8 +159,8 @@ VALUES ('Ivan', 'Ivanov', 26, '1993-02-03', 'evro', 'm', 1),
        ('Petr', 'Petrov', 19, '2000-04-05', 'evro', 'm', 1);
 
 INSERT INTO blood_analysis (patient_id, labratory_id, glucose, HDL, LDL, general_protein, HGB, HCT)
-VALUES (1, 2, 6.8, 2.1, 1.9, 34, 130, 0.40),
-       (1, 2, 4.8, 2.2, 2.5, 41, 155, 0.39),
+VALUES (1, 2, 6.8, 2.1, 5.9, 34, 130, 0.40),
+       (1, 2, 4.8, 2.2, 4.9, 41, 155, 0.39),
        (2, 1, 9.9, 2.4, 1.3, 68, 165, 0.42),
        (3, 2, 3.5, 2.7, 1.8, 70, 188, 0.32);
 
@@ -181,7 +181,12 @@ VALUES (1, 1, 'neg', 'neg', 'neg', 'neg'),
 INSERT INTO vital_functions(patient_id, heart_rate, temp, pressure_sys, pressure_dias, respiratory_rate)
 VALUES (1, 70, 36.6, 120, 70, 16),
        (2, 80, 36.8, 130, 60, 17),
-       (3, 90, 36.5, 120, 80, 19);
+       (3, 90, 41 , 120, 80, 27);
+
+INSERT INTO physical_exam (patient_id, cardiovascular_sys, respiratory_sys, digestive_sys, endocrine_sys, urinary_sys)
+VALUES (1, 'deviation', 'norm', 'norm', 'norm', 'norm'),
+       (2, 'norm', 'norm', 'norm', 'norm', 'deviation'),
+       (3, 'norm', 'deviation', 'norm', 'norm', 'norm');       
 
 INSERT INTO anthropometric_data(patient_id, weight, height)
 VALUES(1, 56, 1.56),
