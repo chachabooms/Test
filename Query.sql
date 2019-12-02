@@ -47,7 +47,7 @@ ON clinical_monitor.id = comments_monitor.monitor_id;
 INSERT INTO patient (first_name, last_name, age, birthday, race, sex, doctor_id)
 VALUES ('Petor', 'Ivanov', 10, '1993-02-03', 'evro', 'm', 1);
 
--- выбор тех пациентов, у которых гемоглобин попал в норму, а так же что за лаборатория делала анализ
+-- выбор тех пациентов, у которых гемоглобин попал в норму, а так же что за лаборатория cделала анализ
 SELECT first_name, last_name, HGB, labratory.name as lab
 FROM patient
 INNER JOIN blood_analysis
@@ -56,7 +56,7 @@ INNER JOIN labratory
 ON labratory.id = blood_analysis.labratory_id
 WHERE HGB >= 130 AND HGB <= 170;
 
--- выбор тех пациентов, у которых гемоглобин не попал в норму, а так же что за лаборатория делала анализ и ее документы
+-- выбор тех пациентов, у которых гемоглобин не попал в норму, а так же что за лаборатория cделала анализ и ее документы
 SELECT first_name, last_name, HGB, labratory.name as lab, certificate 
 FROM patient
 INNER JOIN blood_analysis
