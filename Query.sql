@@ -86,7 +86,7 @@ INNER JOIN blood_analysis
 ON t.id = blood_analysis.patient_id
 WHERE glucose >= 7;
 
--- выберим тех пациентов, у которых температура выше средней (расчет среднего из всей выборки пациентов)
+-- выберем тех пациентов, у которых температура выше среднего (расчет среднего из всей выборки пациентов)
 SELECT first_name, last_name, temp
 FROM patient
 INNER JOIN vital_functions
