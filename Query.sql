@@ -6,7 +6,7 @@ ON labratory.id = blood_analysis.labratory_id
 GROUP BY lab
 ORDER BY item;
 
--- запрос сколько каждая лабортория сделала анализов по убыванию
+-- запрос сколько каждая лаборатория сделала анализов по убыванию
 SELECT name, COUNT(item) as num FROM (
 SELECT labratory.name as name, blood_analysis.labratory_id as item
 FROM labratory
